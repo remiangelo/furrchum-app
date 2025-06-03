@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { WebView } from 'react-native-webview';
 import { supabase } from '../../lib/supabase';
 
@@ -61,11 +61,11 @@ export default function VideoCallScreen() {
             No Active Calls
           </Text>
           <Text variant="bodyMedium" style={styles.subtitle}>
-            You don't have any active video consultations at the moment.
+            You don&apos;t have any active video consultations at the moment.
           </Text>
           <Button
             mode="contained"
-            onPress={() => {/* TODO: Navigate to book consultation */}}
+            onPress={() => router.push('/book-consultation')}
             style={styles.button}
           >
             Book Consultation
@@ -79,7 +79,7 @@ export default function VideoCallScreen() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: \`Call with \${activeCall.vet_name}\`,
+          title: `Call with ${activeCall.vet_name}`,
           headerShown: true,
         }}
       />

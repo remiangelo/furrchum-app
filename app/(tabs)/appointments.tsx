@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, Button, Card, Avatar } from 'react-native-paper';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { supabase } from '../../lib/supabase';
 
 type Appointment = {
@@ -35,6 +35,10 @@ export default function AppointmentsScreen() {
     }
   };
 
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
   const getStatusColor = (status: Appointment['status']) => {
     switch (status) {
       case 'upcoming':
@@ -62,7 +66,7 @@ export default function AppointmentsScreen() {
           <Text variant="headlineMedium">My Appointments</Text>
           <Button
             mode="contained"
-            onPress={() => {/* TODO: Navigate to book appointment */}}
+            onPress={() => router.push('/book-appointment')}
             style={styles.bookButton}
           >
             Book New
@@ -93,11 +97,17 @@ export default function AppointmentsScreen() {
               </View>
             </Card.Content>
             <Card.Actions>
-              <Button onPress={() => {/* TODO: View appointment details */}}>
+              <Button onPress={() => router.push({
+                pathname: '/appointment-details',
+                params: { id: appointment.id }
+              })}>
                 View Details
               </Button>
               {appointment.status === 'upcoming' && (
-                <Button onPress={() => {/* TODO: Cancel appointment */}}>
+                <Button onPress={() => router.push({
+                  pathname: '/appointment-details',
+                  params: { id: appointment.id }
+                })}>
                   Cancel
                 </Button>
               )}
